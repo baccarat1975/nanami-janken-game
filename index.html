@@ -74,10 +74,18 @@ function show(src,fb){
 }
 function gs(c){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$("game").className="screen active "+c}
 function startBgm(){
-  if(!bgm)return;
-  try{bgm.loop=true;bgm.volume=.62;if(bgm.paused){bgm.currentTime=0;const p=bgm.play();if(p&&p.catch)p.catch(()=>{})}}
-  catch(e){}
+  if(!bgm || document.hidden)return;
+  try{
+    bgm.loop=true;
+    bgm.volume=.62;
+    if(bgm.paused){
+      bgm.currentTime=0;
+      const p=bgm.play();
+      if(p&&p.catch)p.catch(()=>{});
+    }
+  }catch(e){}
 }
+
 function stopBgmForBackground(){
   ++fadeToken;
   if(!bgm)return;
@@ -87,16 +95,18 @@ function stopBgmForBackground(){
     bgm.volume=.62;
   }catch(e){}
 }
-function resumeBgmIfTitle(){
-  if(document.visibilityState==="visible" && phase==="title") startBgm();
-}
-document.addEventListener("visibilitychange",()=>{
-  if(document.visibilityState==="hidden") stopBgmForBackground();
-  else resumeBgmIfTitle();
-});
-window.addEventListener("blur",()=>stopBgmForBackground());
-window.addEventListener("focus",()=>resumeBgmIfTitle());
 
+// ページを見ていない間は、PC・スマホともBGMを完全停止。
+// 戻ってきても自動再開しない（ユーザー操作でタイトル画面へ戻った時だけ再開）。
+function handlePageHidden(){
+  if(document.hidden) stopBgmForBackground();
+}
+document.addEventListener("visibilitychange", handlePageHidden);
+window.addEventListener("pagehide", stopBgmForBackground);
+window.addEventListener("freeze", stopBgmForBackground);
+window.addEventListener("blur", ()=>{
+  if(document.hidden) stopBgmForBackground();
+});
 function stopBgmImmediate(){
   if(!bgm)return;
   try{bgm.pause();bgm.currentTime=0;bgm.volume=.62}catch(e){}
