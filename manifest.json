@@ -1,14 +1,27 @@
 {
-  "name": "阿部菜々実じゃんけんゲーム",
+  "id": "./",
+  "name": "阿部菜々実 じゃんけんゲーム",
   "short_name": "菜々実じゃんけん",
+  "description": "阿部菜々実の写真で遊ぶじゃんけんゲーム",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#111111",
-  "theme_color": "#111111",
-  "description": "写真をシャッフルして楽しむ阿部菜々実じゃんけんゲーム",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
